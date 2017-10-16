@@ -3,7 +3,7 @@ package PriorityQueue
 import "container/heap"
 
 type HeapItem struct {
-	order        int
+	order        uint64
 	index    int
 	priority int
 	data     interface{}
@@ -34,7 +34,6 @@ func (pq *QueueHeap) Push(x interface{}) {
 	n := len(*pq)
 	item := x.(*HeapItem)
 	item.index = n
-	item.order = n
 	*pq = append(*pq, item)
 }
 

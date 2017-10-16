@@ -8,6 +8,7 @@ import (
 type Queue struct {
 	qh *QueueHeap
 	m sync.Mutex
+	count uint64
 }
 
 func Build() Queue {
@@ -18,7 +19,9 @@ func Build() Queue {
 }
 
 func (q *Queue) Push (i interface{}, pr int) (bool, error){
+	q.count++
 	hi := HeapItem{
+		order: q.count,
 		priority: pr,
 		data:i,
 	}
