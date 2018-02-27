@@ -47,7 +47,7 @@ func (q *Queue) Len() int {
 	return  q.qh.Len()
 }
 
-//Receives channels in order of priority.(more is better) Returns output channel.
+//Receives channels in order of priority.(more is better) Returns output channel. (exp)
 func Prioritize(ins... chan interface{}) (chan interface{}, error)  {
 	out := make(chan interface{})
 	q := Build()
