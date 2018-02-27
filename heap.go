@@ -1,7 +1,5 @@
 package PriorityQueue
 
-import "container/heap"
-
 type HeapItem struct {
 	order        uint64
 	index    int
@@ -44,11 +42,4 @@ func (pq *QueueHeap) Pop() interface{} {
 	item.index = -1 // for safety
 	*pq = old[0 : n-1]
 	return item
-}
-
-// update modifies the priority and value of an Item in the queue.
-func (pq *QueueHeap) update(item *HeapItem, value string, priority int) {
-	item.data = value
-	item.priority = priority
-	heap.Fix(pq, item.index)
 }
