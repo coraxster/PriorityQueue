@@ -6,19 +6,33 @@ import (
 	"time"
 )
 
-func TestQueue_Push(t *testing.T) {
+func TestQueuePush(t *testing.T) {
 	item := struct {}{}
 	q := Build()
 	q.Push(item, 2)
 	assert.Equal(t, q.Len(), 1)
 }
 
-func TestQueue_Pull(t *testing.T) {
+func TestQueuePull(t *testing.T) {
 	item := struct {}{}
 	q := Build()
 	q.Push(item, 2)
 	gotItem, _ := q.Pull()
 	assert.Equal(t, gotItem, item)
+}
+
+func TestQueuePullEmpty(t *testing.T) {
+	q := Build()
+	gotItem, err := q.Pull()
+	assert.Equal(t, err.Error(), "empty")
+	assert.Equal(t, gotItem, nil)
+}
+
+func TestQueueLen(t *testing.T) {
+	q := Build()
+	assert.Equal(t, q.Len(), 0)
+	q.Push(struct {}{}, 1)
+	assert.Equal(t, q.Len(), 1)
 }
 
 func TestPriority(t *testing.T) {

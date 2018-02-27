@@ -5,6 +5,7 @@ import (
 	"container/heap"
 	"sync"
 	//"reflect"
+	"errors"
 )
 
 type Queue struct {
@@ -34,10 +35,12 @@ func (q *Queue) Push (i interface{}, pr int) (bool, error){
 }
 
 func (q *Queue) Pull() (interface{}, error) {
+	if q.Len() == 0 {
+		return nil, errors.New("empty")
+	}
 	q.m.Lock()
-	defer q.m.Unlock();
+	defer q.m.Unlock()
 	item := heap.Pop(q.qh).(*HeapItem)
-
 	return item.data, nil
 }
 
