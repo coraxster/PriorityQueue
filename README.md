@@ -1,4 +1,4 @@
-# PriorityQueue
+# PriorityQueue [![Build Status](https://travis-ci.org/coraxster/PriorityQueue.svg?branch=master)](https://travis-ci.org/coraxster/PriorityQueue)
 
 Priority Queue implementation on Go.
 
