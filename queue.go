@@ -6,6 +6,7 @@ import (
 	"sync"
 	//"reflect"
 	"errors"
+	"math"
 )
 
 type Queue struct {
@@ -24,6 +25,12 @@ func Build() Queue {
 func (q *Queue) Push (i interface{}, pr int) (bool, error){
 	q.m.Lock()
 	defer q.m.Unlock()
+	if uint64(q.qh.Len()) == math.MaxUint64 {
+		return false, errors.New("queue is full")
+	}
+	if q.count == math.MaxUint64 {
+		q.count = q.qh.CollapseOrder()
+	}
 	q.count++
 	hi := HeapItem{
 		order: q.count,

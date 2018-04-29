@@ -37,3 +37,19 @@ func (pq *QueueHeap) Pop() interface{} {
 	*pq = old[0 : n-1]
 	return item
 }
+
+func (pq QueueHeap) CollapseOrder() uint64 {
+	orderMap := make(map[uint64][]*HeapItem)
+	orders := make([]uint64, 0)
+	for _, hi := range pq {
+		orderMap[hi.order] = append(orderMap[hi.order], hi)
+		orders = append(orders, hi.order)
+	}
+
+	for i, order := range orders {
+		for _, hi := range orderMap[order] {
+			hi.order = uint64(i+1)
+		}
+	}
+	return uint64(len(orders))
+}
