@@ -1,5 +1,7 @@
 package PriorityQueue
 
+import "sort"
+
 type HeapItem struct {
 	order        uint64
 	priority int
@@ -45,7 +47,7 @@ func (pq QueueHeap) CollapseOrder() uint64 {
 		orderMap[hi.order] = append(orderMap[hi.order], hi)
 		orders = append(orders, hi.order)
 	}
-
+	sort.Slice(orders, func(i, j int) bool { return orders[i] < orders[j] })
 	for i, order := range orders {
 		for _, hi := range orderMap[order] {
 			hi.order = uint64(i+1)
