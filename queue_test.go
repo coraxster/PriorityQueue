@@ -1,20 +1,19 @@
 package PriorityQueue
 
 import (
-	"testing"
 	"github.com/magiconair/properties/assert"
-	"time"
+	"testing"
 )
 
 func TestQueuePush(t *testing.T) {
-	item := struct {}{}
+	item := struct{}{}
 	q := Build()
 	q.Push(item, 2)
 	assert.Equal(t, q.Len(), 1)
 }
 
 func TestQueuePull(t *testing.T) {
-	item := struct {}{}
+	item := struct{}{}
 	q := Build()
 	q.Push(item, 2)
 	gotItem, _ := q.Pull()
@@ -31,7 +30,7 @@ func TestQueuePullEmpty(t *testing.T) {
 func TestQueueLen(t *testing.T) {
 	q := Build()
 	assert.Equal(t, q.Len(), 0)
-	q.Push(struct {}{}, 1)
+	q.Push(struct{}{}, 1)
 	assert.Equal(t, q.Len(), 1)
 }
 
@@ -54,9 +53,15 @@ func TestPrioritize(t *testing.T) {
 	outCh, _ := Prioritize(ch1, ch2)
 
 	ch2 <- item2
-	time.Sleep(time.Millisecond)
+	ch2 <- item2
+	ch2 <- item2
+
+	ch1 <- item1
+	ch1 <- item1
 	ch1 <- item1
 
-	firstGot := <-outCh
-	assert.Equal(t, firstGot, item2)
+	<-outCh
+
+	got := <-outCh
+	assert.Equal(t, got, item1)
 }
